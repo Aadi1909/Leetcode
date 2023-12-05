@@ -1,2 +1,1 @@
-/* Write your T-SQL query statement below */
-SELECT p.product_name,s.year,s.price from Sales s,Product p where p.product_id = s.product_id
+SELECT Product.product_name,Sales.year,Sales.price from Sales, Product where Product.product_id = Sales.product_id
