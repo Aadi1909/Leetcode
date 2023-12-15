@@ -8,23 +8,7 @@ public:
         if(s.length() == 1){
             return s;
         }
-        int first = -1, last = -1;
-        for(int i = s.length()-1; i >= 0; i--){
-            if(isVowel(s[i])){
-                last = i;
-                break;
-            }
-        }
-        for(int i = 0; i < s.length(); i++){
-            if(isVowel(s[i])){
-                first = i;
-                break;
-            }
-        }
-        if(first == -1 && last == -1){
-            return s;
-        }
-        int low = first, hi = last;
+        int low = 0, hi = s.length()-1;
         while(low <= hi){
             if(isVowel(s[low]) && isVowel(s[hi])){
                 swap(s[low], s[hi]);
