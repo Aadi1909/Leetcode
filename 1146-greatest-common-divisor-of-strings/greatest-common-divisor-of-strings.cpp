@@ -2,19 +2,9 @@ class Solution {
 public:
     string gcdOfStrings(string str1, string str2) {
         int mxDiv=2, len=(int)str1.length(), len2=str2.length();
-        int f[26] = {}, s[26] = {};
         int ll = min(len, len2);
         for(int i=0; i<ll; i++){
             if(str1[i]!=str2[i])return "";
-        }
-        for(int i = 0; i < len; i++){
-            f[str1[i]-'A']++;
-        }
-        for(int j = 0; j < len2; j++){
-            s[str2[j]-'A']++;
-        }
-        for(int i = 0; i < 26; i++){
-            if(f[i] == 0 && s[i] > 0 || f[i] > 0 && s[i] == 0) return "";
         }
         for(int i=2; i<=len; i++){
             if(len%i==0 && len2%i==0)mxDiv = i;
