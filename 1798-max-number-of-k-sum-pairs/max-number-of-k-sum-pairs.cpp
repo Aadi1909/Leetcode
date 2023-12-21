@@ -1,22 +1,19 @@
 class Solution {
 public:
-    int maxOperations(vector<int>& nums, int k) {
-        sort(nums.begin(),nums.end());
-        int low=0,hi=nums.size()-1;
-        int cnt=0;
-        while(low<hi){
-            int sm=nums[low]+nums[hi];
-            if(sm-k==0){
-                cnt++;
-                low++,hi--;
-            }
-            else if(sm-k>0){
-                hi--;
-            }
-            else{
-                low++;
+    int maxOperations(std::vector<int>& nums, int k) {
+        unordered_map<int, int> numCounts;
+        int operationCount = 0;
+        for (int num : nums) {
+            if (numCounts.find(k - num) != numCounts.end() && numCounts[k - num] > 0) {
+                operationCount++;
+                numCounts[k - num]--;
+            } else {
+                if (numCounts.find(num) == numCounts.end())
+                    numCounts[num] = 0;
+                numCounts[num]++;
             }
         }
-        return cnt;
+
+        return operationCount;
     }
 };
