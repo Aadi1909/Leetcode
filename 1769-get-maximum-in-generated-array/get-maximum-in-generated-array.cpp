@@ -1,16 +1,14 @@
 class Solution {
 public:
     int getMaximumGenerated(int N) {
-        if(N==0)return 0;
-        if(N==1)return 1;
+        if(N==0||N==1)return N;
         vector<int>dp(N+1);
         dp[0]=0,dp[1]=1;
-        int mx=-1e9;
-        for(int i=2; i<=N; i++){
-            if(i%2==0)dp[i]=dp[i/2];
-            else dp[i]=dp[i/2]+dp[i/2+1];
-            mx=max(mx,dp[i]);
+        for(int i=1; i<=N; i++){
+            if(2*i<=N)dp[2*i]=dp[i];
+            if(2*i+1<=N)dp[2*i+1]=dp[i]+dp[i+1];
         }
-        return mx;
+        int res=*max_element(dp.begin(),dp.end());
+        return res;
     }
 };
