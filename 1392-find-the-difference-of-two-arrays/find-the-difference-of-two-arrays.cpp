@@ -17,13 +17,14 @@ public:
         }
         vector<int>v(tmp1.begin(),tmp1.end());
         answer.push_back(v);
+        v.clear();
         for(int i=0; i<nums2.size(); i++){
             if(a.count(nums2[i])==0){
                 tmp2.insert(nums2[i]);
             }
         }
-        vector<int>v2(tmp2.begin(),tmp2.end());
-        answer.push_back(v2);
+        v.assign(tmp2.begin(),tmp2.end());
+        answer.push_back(v);
         return answer;
     }
 };
