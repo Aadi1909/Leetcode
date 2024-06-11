@@ -1,7 +1,7 @@
 class Solution {
 public:
     int maxChunksToSorted(vector<int>& arr) {
-        int answer = 0;
+        /*int answer = 0;
         int sum = 0, low = 0;
         bool ok = false;
         while(low < arr.size()){
@@ -22,7 +22,15 @@ public:
 				sum += arr[low];
             }
             low++;
-        }
+        }*/
+          std::set<int> st;
+          int answer = 0;
+          for(int index = 0; index < arr.size(); ++index){
+            st.insert(arr[index]);
+            if(index == *(st.rbegin())){
+                answer++;
+            }
+          }
         return answer;
     }
 };
