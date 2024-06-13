@@ -6,8 +6,8 @@ public:
         while(low + 1 < hi){
             int64_t mid = low + (hi - low) / 2;
             int64_t count = 0;
-            for(int i = 0; i < candies.size(); ++i){
-                count += candies[i] / mid;
+            for(int& c : candies){
+                count += c / mid;
             }
             if(count >= k){
                 answer = max<int64_t>(answer, mid);
