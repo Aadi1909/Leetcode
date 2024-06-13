@@ -2,7 +2,7 @@ class Solution {
 public:
     int maximumCandies(vector<int>& candies, long long k) {
         int64_t answer = 0;
-        int64_t low = 0, hi = 1e14;
+        int64_t low = 0, hi = 1e8;
         while(low + 1 < hi){
             int64_t mid = low + (hi - low) / 2;
             int64_t count = 0;
