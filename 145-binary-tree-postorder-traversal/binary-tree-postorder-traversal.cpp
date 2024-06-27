@@ -11,17 +11,23 @@
  */
 class Solution {
 public:
-    vector<int> answer;
-    void f(TreeNode* root) {
-        if(root == nullptr){
-            return ;
-        }
-        f(root->left);
-        f(root->right);
-        answer.push_back(root->val);
-    }
     vector<int> postorderTraversal(TreeNode* root) {
-        f(root);
+        vector<int> answer;
+        if(root == nullptr) return {};
+        stack<TreeNode*> st;
+        st.push(root);
+        while(!st.empty()){
+            TreeNode* node = st.top();
+            st.pop();
+            answer.push_back(node->val);
+            if(node->left != nullptr){
+                st.push(node->left);
+            }
+            if(node->right != nullptr) {
+                st.push(node->right);
+            }
+        }
+        reverse(answer.begin(), answer.end());
         return answer;
     }
 };
