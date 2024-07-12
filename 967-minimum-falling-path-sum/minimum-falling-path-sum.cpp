@@ -14,12 +14,10 @@ public:
         }
         for (int i = n - 1; i >= 0; i--) {
             for (int j = m - 1; j >= 0; j--) {
-                int ans = dp[i + 1][j] + a[i][j];
-                if (j + 1 < n)
-                    ans = min(ans, dp[i + 1][j + 1] + a[i][j]);
+                dp[i][j] = dp[i + 1][j] + a[i][j];
+                dp[i][j] = min(dp[i][j], dp[i + 1][j + 1] + a[i][j]);
                 if (j - 1 >= 0)
-                    ans = min(ans, dp[i + 1][j - 1] + a[i][j]);
-                dp[i][j] = ans;
+                  dp[i][j] = min(dp[i][j], dp[i + 1][j - 1] + a[i][j]);
             }
         }
         int result = 1e9;
