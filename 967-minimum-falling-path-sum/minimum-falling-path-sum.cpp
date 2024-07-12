@@ -1,28 +1,31 @@
 class Solution {
 public:
-    int minFallingPathSum(vector<vector<int>>&A) {
-        int N=A.size(),M=A[0].size();
-        vector<vector<int>>dp(N,vector<int>(M,0));
-        for(int i=0; i<M; i++){
-            dp[0][i]=A[0][i];
+    int minFallingPathSum(vector<vector<int>>& a) {
+        int n = a.size();
+        int m = a[0].size();
+        int dp[n + 1][m + 1];
+        for(int i=0; i<=n; ++i){
+          for(int j=0; j<=m; ++j){
+            dp[i][j]=1e9;
+          }
         }
-        for(int i=1; i<N; i++){
-            for(int j=M-1; j>=0; j--){
-                if(j==M-1){
-                    dp[i][j]=min(dp[i-1][j],dp[i-1][j-1])+A[i][j];        
-                }
-                else if(j==0){
-                    dp[i][j]=min(dp[i-1][j],dp[i-1][j+1])+A[i][j];
-                }
-                else{
-                    dp[i][j]=min({dp[i-1][j],dp[i-1][j-1],dp[i-1][j+1]})+A[i][j];
-                }
+        for (int i = 0; i <= m; ++i) {
+            dp[n][i] = 0;
+        }
+        for (int i = n - 1; i >= 0; i--) {
+            for (int j = m - 1; j >= 0; j--) {
+                int ans = dp[i + 1][j] + a[i][j];
+                if (j + 1 < n)
+                    ans = min(ans, dp[i + 1][j + 1] + a[i][j]);
+                if (j - 1 >= 0)
+                    ans = min(ans, dp[i + 1][j - 1] + a[i][j]);
+                dp[i][j] = ans;
             }
         }
-        int res=1e9;
-        for(int j=0; j<M; j++){
-            res=min(res,dp[N-1][j]);
+        int result = 1e9;
+        for (int i = 0; i <= m; ++i) {
+            result = min(result, dp[0][i]);
         }
-        return res;
+        return result;
     }
 };
