@@ -2,20 +2,21 @@ class Solution {
 public:
     int change(int amount, vector<int>& coins) {
         int n = coins.size();
-        int m = amount;
-        if(amount == 0) return 1;
-        int dp[n][m];
-        memset(dp, -1, sizeof(dp));
-        function<int(int, int)> sol = [&](int currentAmount, int index){
-            if(index >= coins.size() or currentAmount > amount) return 0;
-            if(currentAmount == amount) return 1;
-            int answer = 0;
-            if(dp[index][currentAmount] != -1) return dp[index][currentAmount];
-            if((coins[index] + currentAmount) <= amount) 
-                answer += sol(currentAmount + coins[index], index);
-                answer += sol(currentAmount, index + 1);
-            return dp[index][currentAmount] = answer;
-        };
-        return sol(0,0);
+        int k = amount;
+        int dp[n + 1][k + 1];
+        memset(dp, 0, sizeof(dp));
+        dp[n][k] = 1;
+        for(int i = 0; i < k; ++i){
+            dp[n][i] = 0;
+        }
+        for(int i = n - 1; i >= 0; i--){
+            for(int j = k; j >= 0; j--){
+                dp[i][j] = dp[i + 1][j];
+                if(j + coins[i] <= k){
+                    dp[i][j] += dp[i][j + coins[i]];
+                }
+            }
+        }
+        return dp[0][0];
     }
 };
