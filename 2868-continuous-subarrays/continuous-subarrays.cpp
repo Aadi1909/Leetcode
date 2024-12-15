@@ -1,23 +1,32 @@
 class Solution {
 public:
     long long continuousSubarrays(vector<int>& nums) {
-        long long answer = 0;
-        int lo = 0;
-        map<int, int> mp;
-        for (int i = 0; i < nums.size(); ++i) {
-            mp[nums[i]]++;
-            int Max = mp.rbegin() != mp.rend() ? mp.rbegin()->first : 0;
-            int Min = mp.begin() != mp.end() ? mp.begin()->first : 0;
-            while (lo < nums.size() && Max - Min > 2) {
-                mp[nums[lo]]--;
-                if (mp[nums[lo]] == 0) mp.erase(nums[lo]);
-                lo++;
-                Max = mp.rbegin() != mp.rend() ? mp.rbegin()->first : 0;
-                Min = mp.begin() != mp.end() ? mp.begin()->first : 0;
+        int right = 0, left = 0;
+        int curMin, curMax;
+        long long windowLen = 0, total = 0;
+        curMin = curMax = nums[right];
+        for (right = 0; right < nums.size(); right++) {
+            curMin = min(curMin, nums[right]);
+            curMax = max(curMax, nums[right]);
+            if (curMax - curMin > 2) {
+                windowLen = right - left;
+                total += (windowLen * (windowLen + 1) / 2);
+                left = right;
+                curMin = curMax = nums[right];
+                while (left > 0 && abs(nums[right] - nums[left - 1]) <= 2) {
+                    left--;
+                    curMin = min(curMin, nums[left]);
+                    curMax = max(curMax, nums[left]);
+                }
+                if (left < right) {
+                    windowLen = right - left;
+                    total -= (windowLen * (windowLen + 1) / 2);
+                }
             }
-            answer += i - lo + 1;
         }
+        windowLen = right - left;
+        total += (windowLen * (windowLen + 1) / 2);
 
-        return answer;
+        return total;
     }
 };
