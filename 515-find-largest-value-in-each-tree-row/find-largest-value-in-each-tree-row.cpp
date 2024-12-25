@@ -2,25 +2,28 @@ class Solution {
 public:
     vector<int> largestValues(TreeNode* root) {
         if (!root) return {};
-        queue<TreeNode*> q;
-        q.push(root);
+        stack<pair<TreeNode*, int>> st;
+        st.push({root, 0});
         vector<int> answer;
         answer.push_back(root->val);
-        while (!q.empty()) {
-            int sz = q.size();
-            priority_queue<int> pq;
-            for (int i = 0; i < sz; ++i) {
-                TreeNode* node = q.front(); q.pop();
-                if (node->left) { 
-                    q.push(node->left);
-                    pq.push(node->left->val);
-                }
-                if (node->right) { 
-                    q.push(node->right); 
-                    pq.push(node->right->val);
-                }
+        while (!st.empty()) {
+            pair<TreeNode*, int> pair = st.top();
+            st.pop();
+            TreeNode* node = pair.first;
+            int depth = pair.second;
+            if (depth == answer.size()) {
+                answer.push_back(node->val);
             }
-            if (pq.size() > 0) answer.push_back(pq.top());
+            else {
+                answer[depth] = max(answer[depth], node->val);
+            }
+            if (node->left) {
+                st.push({node->left, depth + 1});
+            }
+            if (node->right) {
+                st.push({node->right, depth + 1});
+            }
+
         }
         return answer;
     }
