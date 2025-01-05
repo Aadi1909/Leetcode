@@ -7,18 +7,10 @@ public:
         for(int i = 0; i < shifts.size(); ++i){
             int l = shifts[i][0];
             int r = shifts[i][1];
-            if(shifts[i][2]){
-                diff[l]++;
-                diff[r + 1]--;
-            }
-            else{
-                diff[l]--;
-                diff[r + 1]++;
-            }
+            diff[l] += (shifts[i][2] ? 1 : -1);
+            diff[r + 1] += (shifts[i][2] ? -1 : 1);
         }
-        for(int i = 1; i < n; ++i){
-            diff[i] += diff[i - 1];
-        }
+        partial_sum(diff.begin(), diff.end(), diff.begin());
         int k = 26;
         for(int i = 0; i < n; ++i){
             int pos = s[i] - 'a';
