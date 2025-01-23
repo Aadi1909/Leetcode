@@ -1,13 +1,7 @@
-#include <vector>
-#include <string>
-#include <unordered_map>
-#include <deque>
-#include <numeric>
-
 class Solution {
 public:
     std::vector<std::string> findRepeatedDnaSequences(std::string s) {
-        std::unordered_map<std::string, int> has;  // Use string as key
+        std::unordered_map<std::string, int> has;
         std::deque<char> seq;
         std::vector<std::string> answer;
         for (int i = 0; i < (int)s.length(); ++i) {
