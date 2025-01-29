@@ -30,19 +30,17 @@ class Solution {
 public:
     int findCircleNum(vector<vector<int>>& arr) {
         dsu uf(arr.size() + 1);
+        int answer = arr.size();
         for (int i = 0; i < arr.size(); ++i) {
             for (int j = 0; j < arr[i].size(); ++j) {
                 if (arr[i][j]) {
                     if (uf.find(i + 1) != uf.find(j + 1)) {
                         uf.make(i + 1, j + 1);
+                        answer--;
                     }
                 }
             }
         }
-        set<int> answer;
-        for (int i = 1; i <= arr.size(); ++i) {
-            answer.insert(uf.find(i));
-        }
-        return answer.size();
+        return answer;
     }
 };
