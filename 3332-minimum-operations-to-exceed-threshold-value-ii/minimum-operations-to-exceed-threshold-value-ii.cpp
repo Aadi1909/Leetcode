@@ -6,9 +6,9 @@ public:
             pq.push(num);
         }
         int op = 0;
-        while (pq.size() > 1){
+        while (pq.size() > 1 && !(pq.top() >= k)){
             int64_t x = pq.top(); pq.pop();
-            if(x >= k) break;
+            // if(x >= k) break;
             int64_t y = pq.top(); pq.pop();
             int64_t val = x * 2LL + y;
             pq.push(val);
