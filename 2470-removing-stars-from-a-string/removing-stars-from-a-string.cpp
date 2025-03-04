@@ -5,14 +5,10 @@ public:
         for(int i = 0; i < s.length(); ++i) {
             if (s[i] != '*') a_s += s[i];
             else {
-                int count = 0;
                 int j = i;
                 while (s[j] == '*' && j < s.length()) {
-                    count++;
-                    j++;
-                }
-                while (count--){
                     a_s.pop_back();
+                    j++;
                 }
                 i = j - 1;
             }
