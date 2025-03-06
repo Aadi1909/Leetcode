@@ -2,7 +2,6 @@ class Solution {
 public:
     vector<int> nextGreaterElements(vector<int>& nums) {
         int n = nums.size();
-        vector<int> n_r(n, -1), n_l(n, -1);
         vector<int> a_s(n, -1);
         stack<int> s_t;
         for (int i = n - 1; i >= 0; --i) {
