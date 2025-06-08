@@ -1,18 +1,19 @@
 class Solution {
 public:
     vector<int> lexicalOrder(int n) {
-        vector<int> answer;
-        function<void(int)> dfs = [&](int curr) {
-            if (curr > n) return ;
-            answer.push_back(curr);
-            for (int i = 0; i < 10; ++i) {
-                int depth = curr * 10 + i;
-                dfs(depth);
+        vector<int> lexicographicalNumbers;
+        int currentNumber = 1;
+        for (int i = 0; i < n; ++i) {
+            lexicographicalNumbers.push_back(currentNumber);
+            if (currentNumber * 10 <= n) {
+                currentNumber *= 10;
+            } else {
+                while (currentNumber % 10 == 9 || currentNumber >= n) {
+                    currentNumber /= 10;
+                }
+                currentNumber += 1;
             }
-        };
-        for (int i = 1; i <= 9; ++i) {
-            dfs(i);
         }
-        return answer;
+        return lexicographicalNumbers;
     }
 };
