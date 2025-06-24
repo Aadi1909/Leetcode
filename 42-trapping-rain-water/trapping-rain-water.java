@@ -4,39 +4,29 @@ class Solution {
        Stack<Integer> right = new Stack<>();
        int n = height.length;
        int l[] = new int[n];
-       int r[] = new int[n]; 
+       int r[] = new int[n];
+       Arrays.fill(l, -1);
+       Arrays.fill(r, -1); 
        right.push(height[n - 1]);
-       r[n - 1] = -1;
        for (int i = n - 2; i >= 0; --i) {
         while (!right.empty() && height[i] >= right.peek()) {
             right.pop();
         }
         if (right.empty()) right.push(height[i]);
-        if (!right.empty()) {
-            r[i] = right.peek();
-        } else {
-            r[i] = -1;
-        }
+        r[i] = right.peek();
        }
        left.push(height[0]);
-       l[0] = -1;
        for (int i = 1; i < n; ++i) {
         while (!left.empty() && left.peek() <= height[i]) {
             left.pop();
         }
         if (left.empty()) left.push(height[i]);
-        if (!left.empty()) {
-            l[i] = left.peek();
-        } else {
-            l[i] = -1;
-        }
+        l[i] = left.peek();
        }
 
        int answer = 0;
-       int index =  1;
-       while(index < n - 1) {
-        answer += Math.min(l[index], r[index]) - height[index];
-        index++;
+       for (int i = 1; i + 1 < n; ++i) {
+        answer += Math.min(l[i], r[i]) - height[i];
        }
        return answer;
     }
