@@ -1,29 +1,24 @@
 class Solution {
 public:
-    vector<vector<int>> dp;
-    int n;
-    string s;
-
-    int sol(int idx, int cnt) {
-        if (cnt < 0 || cnt > n) return 0;
-        if (idx == n) return cnt == 0;
-
-        if (dp[idx][cnt] != -1) return dp[idx][cnt];
-
-        if (s[idx] == '(')
-            return dp[idx][cnt] = sol(idx + 1, cnt + 1);
-        if (s[idx] == ')')
-            return dp[idx][cnt] = sol(idx + 1, cnt - 1);
-
-        return dp[idx][cnt] = sol(idx + 1, cnt + 1)
-                            || sol(idx + 1, cnt - 1)
-                            || sol(idx + 1, cnt);
-    }
-
-    bool checkValidString(string str) {
-        s = str;
-        n = s.length();
-        dp.assign(n + 1, vector<int>(n + 1, -1));
-        return sol(0, 0);
+    bool checkValidString(string s) {
+        int n = s.size();
+        vector<vector<bool>> dp(n + 1, vector<bool> (n + 1, false));
+        dp[n][0] = true;
+        for (int i = n - 1; i >= 0; --i) {
+            for (int j = 0; j <= n; ++j) {
+                bool ok = false;
+                if (s[i] == '(') {
+                    ok |= dp[i + 1][j + 1];
+                } else if (s[i] == ')') {
+                    if (j > 0 ) ok |= dp[i + 1][j - 1];
+                } else {
+                    ok |= dp[i + 1][j + 1];
+                    if (j > 0) ok |= dp[i + 1][j - 1];
+                    ok |= dp[i + 1][j];
+                }
+                dp[i][j] = ok;
+            }
+        }
+        return dp[0][0];
     }
 };
